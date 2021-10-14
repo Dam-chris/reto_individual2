@@ -2,21 +2,47 @@
 
 namespace App\Controller;
 
+use App\Entity\Asignatura;
+use App\Entity\Curso;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class WsController extends AbstractController
 {
     /**
-     * @Route("/ws", name="ws_get_cursos", methods={"GET"})
+     * @Route("/ws/cursos", name="ws_get_cursos", methods={"GET"})
      */
-    public function index(): JsonResponse
+    public function cursos(): JsonResponse
     {
-        return $this->json([
-            'message' => 'hola asier!!',
-            'path' => 'lalalalal lalalala  lelelele',
-        ]);
+        $entityManager = $this->getDoctrine()->getManager();
+        $curso = $entityManager->getRepository(Curso::class)->findAll();
+        $json = $this->convertToJson($curso);
+        return $json;
+    }
+    /**
+     * @Route("/ws/asignaturas", name="ws_get_asignaturas", methods={"GET"})
+     */
+    public function asignaturas(): JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $asignatura = $entityManager->getRepository(Asignatura::class)->findAll();
+        $json = $this->convertToJson($asignatura);
+        return $json;
+    }
+    //conversor a Json
+    private function convertToJson($object):JsonResponse
+    {
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new DateTimeNormalizer(), new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+        $normalized = $serializer->normalize($object, null, array(DateTimeNormalizer::FORMAT_KEY => 'Y/m/d'));
+        $jsonContent = $serializer->serialize($normalized, 'json');
+        return JsonResponse::fromJsonString($jsonContent, 200);
     }
 }
