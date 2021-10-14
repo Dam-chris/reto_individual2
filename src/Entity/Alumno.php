@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Alumno
  *
- * @ORM\Table(name="alumno", indexes={@ORM\Index(name="usuario_id", columns={"usuario_id"})})
+ * @ORM\Table(name="alumno", indexes={@ORM\Index(name="curso_id", columns={"curso_id"}), @ORM\Index(name="usuario_id", columns={"usuario_id"})})
  * @ORM\Entity
  */
 class Alumno
@@ -52,86 +52,79 @@ class Alumno
      */
     private $usuario;
 
-
-
     /**
-     * @param string $nombre
-     * @param string $apellido1
-     * @param string|null $apellido2
-     * @param \Usuario $usuario
+     * @var \Curso
+     *
+     * @ORM\ManyToOne(targetEntity="Curso")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="curso_id", referencedColumnName="id")
+     * })
      */
-    public function __construct(string $nombre, string $apellido1, ?string $apellido2, \Usuario $usuario)
+    private $curso;
+
+    public function getId(): ?int
     {
-        $this->nombre = $nombre;
-        $this->apellido1 = $apellido1;
-        $this->apellido2 = $apellido2;
-        $this->usuario = $usuario;
+        return $this->id;
     }
 
-    //getter y seters
-
-    /**
-     * @return string
-     */
-    public function getNombre(): string
+    public function getNombre(): ?string
     {
         return $this->nombre;
     }
 
-    /**
-     * @param string $nombre
-     */
-    public function setNombre(string $nombre): void
+    public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getApellido1(): string
+    public function getApellido1(): ?string
     {
         return $this->apellido1;
     }
 
-    /**
-     * @param string $apellido1
-     */
-    public function setApellido1(string $apellido1): void
+    public function setApellido1(string $apellido1): self
     {
         $this->apellido1 = $apellido1;
+
+        return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getApellido2(): ?string
     {
         return $this->apellido2;
     }
 
-    /**
-     * @param string|null $apellido2
-     */
-    public function setApellido2(?string $apellido2): void
+    public function setApellido2(?string $apellido2): self
     {
         $this->apellido2 = $apellido2;
+
+        return $this;
     }
 
-    /**
-     * @return \Usuario
-     */
-    public function getUsuario(): \Usuario
+    public function getUsuario(): ?Usuario
     {
         return $this->usuario;
     }
 
-    /**
-     * @param \Usuario $usuario
-     */
-    public function setUsuario(\Usuario $usuario): void
+    public function setUsuario(?Usuario $usuario): self
     {
         $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    public function getCurso(): ?Curso
+    {
+        return $this->curso;
+    }
+
+    public function setCurso(?Curso $curso): self
+    {
+        $this->curso = $curso;
+
+        return $this;
     }
 
 

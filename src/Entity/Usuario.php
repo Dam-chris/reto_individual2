@@ -42,67 +42,45 @@ class Usuario
      */
     private $enabled;
 
-
-    /**
-     * @param string $username
-     * @param string $password
-     * @param bool|null $enabled
-     */
-    public function __construct(string $username, string $password, ?bool $enabled)
+    public function getId(): ?int
     {
-        $this->username = $username;
-        $this->password = $password;
-        $this->enabled = $enabled;
+        return $this->id;
     }
 
-    //getters y setter
-
-    /**
-     * @return string
-     */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
-    public function setUsername(string $username): void
+    public function setUsername(string $username): self
     {
         $this->username = $username;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    /**
-     * @param string $password
-     */
-    public function setPassword(string $password): void
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function getEnabled(): ?bool
     {
         return $this->enabled;
     }
 
-    /**
-     * @param bool|null $enabled
-     */
-    public function setEnabled(?bool $enabled): void
+    public function setEnabled(?bool $enabled): self
     {
         $this->enabled = $enabled;
+
+        return $this;
     }
 
 

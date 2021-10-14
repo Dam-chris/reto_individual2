@@ -48,7 +48,6 @@ class Asignatura
      */
     private $alumno;
 
-
     /**
      * @param string $nombre
      * @param \Curso $curso
@@ -62,53 +61,45 @@ class Asignatura
     }
 
 //getters y setters
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
-    /**
-     * @return string
-     */
-    public function getNombre(): string
+    public function getNombre(): ?string
     {
         return $this->nombre;
     }
 
-    /**
-     * @param string $nombre
-     */
-    public function setNombre(string $nombre): void
+    public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
+
+        return $this;
     }
 
-    /**
-     * @return \Curso
-     */
-    public function getCurso(): \Curso
+    public function getCurso(): ?Curso
     {
         return $this->curso;
     }
 
-    /**
-     * @param \Curso $curso
-     */
-    public function setCurso(\Curso $curso): void
+    public function setCurso(?Curso $curso): self
     {
         $this->curso = $curso;
+
+        return $this;
     }
 
-    /**
-     * @return \Alumno
-     */
-    public function getAlumno(): \Alumno
+    public function getAlumno(): ?Alumno
     {
         return $this->alumno;
     }
 
-    /**
-     * @param \Alumno $alumno
-     */
-    public function setAlumno(\Alumno $alumno): void
+    public function setAlumno(?Alumno $alumno): self
     {
         $this->alumno = $alumno;
+
+        return $this;
     }
 
 

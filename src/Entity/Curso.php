@@ -28,30 +28,21 @@ class Curso
      */
     private $nombre;
 
-    /**
-     * @param string $nombre
-     */
-    public function __construct(string $nombre)
+    public function getId(): ?int
     {
-        $this->nombre = $nombre;
+        return $this->id;
     }
 
-//getters y setters
-
-    /**
-     * @return string
-     */
-    public function getNombre(): string
+    public function getNombre(): ?string
     {
         return $this->nombre;
     }
 
-    /**
-     * @param string $nombre
-     */
-    public function setNombre(string $nombre): void
+    public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
+
+        return $this;
     }
 
 
