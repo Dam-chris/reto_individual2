@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Rol
  *
- * @ORM\Table(name="rol", indexes={@ORM\Index(name="usuario_id", columns={"usuario_id"})})
+ * @ORM\Table(name="rol")
  * @ORM\Entity
  */
 class Rol
@@ -28,16 +28,6 @@ class Rol
      */
     private $nombre;
 
-    /**
-     * @var \Usuario
-     *
-     * @ORM\ManyToOne(targetEntity="Usuario")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
-     * })
-     */
-    private $usuario;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -51,18 +41,6 @@ class Rol
     public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    public function getUsuario(): ?Usuario
-    {
-        return $this->usuario;
-    }
-
-    public function setUsuario(?Usuario $usuario): self
-    {
-        $this->usuario = $usuario;
 
         return $this;
     }

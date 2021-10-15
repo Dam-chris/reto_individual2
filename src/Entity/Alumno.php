@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Alumno
  *
- * @ORM\Table(name="alumno", indexes={@ORM\Index(name="curso_id", columns={"curso_id"}), @ORM\Index(name="usuario_id", columns={"usuario_id"})})
+ * @ORM\Table(name="alumno", indexes={@ORM\Index(name="curso_id", columns={"curso_id"}), @ORM\Index(name="rol_id", columns={"rol_id"})})
  * @ORM\Entity
  */
 class Alumno
@@ -43,14 +43,18 @@ class Alumno
     private $apellido2;
 
     /**
-     * @var \Usuario
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Usuario")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="email", type="string", length=60, nullable=false)
      */
-    private $usuario;
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=50, nullable=false)
+     */
+    private $password;
 
     /**
      * @var \Curso
@@ -61,6 +65,16 @@ class Alumno
      * })
      */
     private $curso;
+
+    /**
+     * @var \Rol
+     *
+     * @ORM\ManyToOne(targetEntity="Rol")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="rol_id", referencedColumnName="id")
+     * })
+     */
+    private $rol;
 
     public function getId(): ?int
     {
@@ -103,14 +117,26 @@ class Alumno
         return $this;
     }
 
-    public function getUsuario(): ?Usuario
+    public function getEmail(): ?string
     {
-        return $this->usuario;
+        return $this->email;
     }
 
-    public function setUsuario(?Usuario $usuario): self
+    public function setEmail(string $email): self
     {
-        $this->usuario = $usuario;
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
 
         return $this;
     }
@@ -123,6 +149,18 @@ class Alumno
     public function setCurso(?Curso $curso): self
     {
         $this->curso = $curso;
+
+        return $this;
+    }
+
+    public function getRol(): ?Rol
+    {
+        return $this->rol;
+    }
+
+    public function setRol(?Rol $rol): self
+    {
+        $this->rol = $rol;
 
         return $this;
     }
