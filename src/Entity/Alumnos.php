@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Alumno
+ * Alumnos
  *
- * @ORM\Table(name="alumno", indexes={@ORM\Index(name="curso_id", columns={"curso_id"}), @ORM\Index(name="rol_id", columns={"rol_id"})})
+ * @ORM\Table(name="alumnos", indexes={@ORM\Index(name="rol_id", columns={"rol_id"})})
  * @ORM\Entity
  */
-class Alumno
+class Alumnos
 {
     /**
      * @var int
@@ -43,6 +43,13 @@ class Alumno
     private $apellido2;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechaNac", type="date", nullable=false)
+     */
+    private $fechanac;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=60, nullable=false)
@@ -57,19 +64,9 @@ class Alumno
     private $password;
 
     /**
-     * @var \Curso
+     * @var \Roles
      *
-     * @ORM\ManyToOne(targetEntity="Curso")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="curso_id", referencedColumnName="id")
-     * })
-     */
-    private $curso;
-
-    /**
-     * @var \Rol
-     *
-     * @ORM\ManyToOne(targetEntity="Rol")
+     * @ORM\ManyToOne(targetEntity="Roles")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="rol_id", referencedColumnName="id")
      * })
@@ -117,6 +114,18 @@ class Alumno
         return $this;
     }
 
+    public function getFechanac(): ?\DateTimeInterface
+    {
+        return $this->fechanac;
+    }
+
+    public function setFechanac(\DateTimeInterface $fechanac): self
+    {
+        $this->fechanac = $fechanac;
+
+        return $this;
+    }
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -141,24 +150,12 @@ class Alumno
         return $this;
     }
 
-    public function getCurso(): ?Curso
-    {
-        return $this->curso;
-    }
-
-    public function setCurso(?Curso $curso): self
-    {
-        $this->curso = $curso;
-
-        return $this;
-    }
-
-    public function getRol(): ?Rol
+    public function getRol(): ?Roles
     {
         return $this->rol;
     }
 
-    public function setRol(?Rol $rol): self
+    public function setRol(?Roles $rol): self
     {
         $this->rol = $rol;
 

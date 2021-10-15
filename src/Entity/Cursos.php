@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Rol
+ * Cursos
  *
- * @ORM\Table(name="rol")
+ * @ORM\Table(name="cursos")
  * @ORM\Entity
  */
-class Rol
+class Cursos
 {
     /**
      * @var int

@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Administrador
+ * Administradores
  *
- * @ORM\Table(name="administrador", indexes={@ORM\Index(name="rol_id", columns={"rol_id"})})
+ * @ORM\Table(name="administradores", indexes={@ORM\Index(name="rol_id", columns={"rol_id"})})
  * @ORM\Entity
  */
-class Administrador
+class Administradores
 {
     /**
      * @var int
@@ -36,9 +36,9 @@ class Administrador
     private $password;
 
     /**
-     * @var \Rol
+     * @var \Roles
      *
-     * @ORM\ManyToOne(targetEntity="Rol")
+     * @ORM\ManyToOne(targetEntity="Roles")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="rol_id", referencedColumnName="id")
      * })
@@ -74,12 +74,12 @@ class Administrador
         return $this;
     }
 
-    public function getRol(): ?Rol
+    public function getRol(): ?Roles
     {
         return $this->rol;
     }
 
-    public function setRol(?Rol $rol): self
+    public function setRol(?Roles $rol): self
     {
         $this->rol = $rol;
 
