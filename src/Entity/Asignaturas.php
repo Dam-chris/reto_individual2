@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Asignaturas
  *
- * @ORM\Table(name="asignaturas")
+ * @ORM\Table(name="asignaturas", indexes={@ORM\Index(name="curso_id", columns={"curso_id"})})
  * @ORM\Entity
  */
 class Asignaturas
@@ -28,6 +28,16 @@ class Asignaturas
      */
     private $nombre;
 
+    /**
+     * @var \Cursos
+     *
+     * @ORM\ManyToOne(targetEntity="Cursos")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="curso_id", referencedColumnName="id")
+     * })
+     */
+    private $curso;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -41,6 +51,18 @@ class Asignaturas
     public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    public function getCurso(): ?Cursos
+    {
+        return $this->curso;
+    }
+
+    public function setCurso(?Cursos $curso): self
+    {
+        $this->curso = $curso;
 
         return $this;
     }

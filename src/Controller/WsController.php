@@ -37,6 +37,10 @@ class WsController extends AbstractController
         $json = $this->convertToJson($asignatura);
         return $json;
     }
+    public function getAsignaturasByCurso(): JsonResponse
+    {
+
+    }
 
     //conversor a Json
     private function convertToJson($object):JsonResponse
