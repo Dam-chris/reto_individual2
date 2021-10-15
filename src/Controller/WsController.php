@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Alumnos;
 use App\Entity\Asignatura;
 use App\Entity\Asignaturas;
 use App\Entity\Curso;
 use App\Entity\Cursos;
+use App\Entity\Matriculas;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,11 +39,28 @@ class WsController extends AbstractController
         $json = $this->convertToJson($asignatura);
         return $json;
     }
-    public function getAsignaturasByCurso(): JsonResponse
-    {
 
+    /**
+     * @Route("/ws/asignaturas/{curso_id}", name="ws_get_asignaturas_by_curso", methods={"GET"})
+     */
+    public function getAsignaturasByCurso($curso_id): JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $asignatura = $entityManager->getRepository(Asignaturas::class)->findBy(['curso'=>$curso_id]);
+        $json = $this->convertToJson($asignatura);
+        return $json;
     }
 
+    /**
+     * @Route("/ws/alumnos/{curso_id}", name="ws_get_alumnos_by_curso", methods={"GET"})
+     */
+    public function getAlumnosByCurso($curso_id):JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $asignatura = $entityManager->getRepository(Alumnos::class)->findAlumnosByCursoId($curso_id);
+        $json = $this->convertToJson($asignatura);
+        return $json;
+    }
     //conversor a Json
     private function convertToJson($object):JsonResponse
     {
