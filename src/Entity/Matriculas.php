@@ -23,7 +23,7 @@ class Matriculas
     private $id;
 
     /**
-     * @var Date
+     * @var \DateTime
      *
      * @ORM\Column(name="fecha", type="date", nullable=false)
      */
@@ -48,6 +48,19 @@ class Matriculas
      * })
      */
     private $alumno;
+
+    /**
+     * @param \DateTime $fecha
+     * @param Cursos $curso
+     * @param Alumnos $alumno
+     */
+    public function __construct(\DateTime $fecha, Cursos $curso, Alumnos $alumno)
+    {
+        $this->fecha = $fecha;
+        $this->curso = $curso;
+        $this->alumno = $alumno;
+    }
+
 
     public function getId(): ?int
     {

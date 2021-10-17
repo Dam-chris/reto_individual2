@@ -73,6 +73,27 @@ class Alumnos
      */
     private $rol;
 
+    /**
+     * @param string $nombre
+     * @param string $apellido1
+     * @param string|null $apellido2
+     * @param \DateTime $fechanac
+     * @param string $email
+     * @param string $password
+     * @param \Roles $rol
+     */
+    public function __construct(string $nombre, string $apellido1, ?string $apellido2, \DateTime $fechanac, string $email, string $password, Roles $rol)
+    {
+        $this->nombre = $nombre;
+        $this->apellido1 = $apellido1;
+        $this->apellido2 = $apellido2;
+        $this->fechanac = $fechanac;
+        $this->email = $email;
+        $this->password = $password;
+        $this->rol = $rol;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
