@@ -9,6 +9,7 @@ use App\Entity\Curso;
 use App\Entity\Cursos;;
 
 use App\Entity\Matriculas;
+use App\Entity\Notas;
 use App\Entity\Roles;
 use FOS\RestBundle\Controller\Annotations\Get;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -90,7 +91,8 @@ class WsController extends AbstractController
         {
             return new JsonResponse(['status' => 'login fail'], Response::HTTP_NOT_FOUND);
         }
-        return new JsonResponse(['status' => 'login ok'], Response::HTTP_OK); ;
+        $json = $this->convertToJson($user);
+        return $json;
     }
     /**
      * @Route("/ws/alumnos/add", name="ws_add_alumno", methods={"POST"})
@@ -138,6 +140,16 @@ class WsController extends AbstractController
         $entityManager->persist($matricula);
         $entityManager->flush();
         return new JsonResponse(['status' =>'Matricula creada'], Response::HTTP_CREATED);
+    }
+    /**
+     * @Route("/ws/notas/{alumnoId}", name="ws_get_notas_by_alumno", methods={"GET"})
+     */
+    public function getNotasByAlumno($alumnoId):JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $notas = $entityManager->getRepository(Notas::class)->findNotasByAlumno($alumnoId);
+        $json = $this->convertToJson($notas);
+        return $json;
     }
     //conversor a Json
     private function convertToJson($object):JsonResponse
