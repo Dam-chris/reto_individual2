@@ -92,7 +92,6 @@ class WsController extends AbstractController
         }
         return new JsonResponse(['status' => 'login ok'], Response::HTTP_OK); ;
     }
-
     /**
      * @Route("/ws/alumnos/add", name="ws_add_alumno", methods={"POST"})
      */
@@ -115,7 +114,8 @@ class WsController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($alumno);
         $entityManager->flush();
-        return new JsonResponse(['status' =>'Alumno creado'], Response::HTTP_CREATED);
+        $json = $this->convertToJson($alumno);
+        return $json;
     }
     /**
      * @Route("/ws/alumnos/addMatricula", name="ws_add_matricula", methods={"POST"})
@@ -127,12 +127,13 @@ class WsController extends AbstractController
         {
             throw new NotFoundHttpException('Faltan parametros');
         }
+        $date = substr($data->fecha, 0, 10);
 
         $entityManager = $this->getDoctrine()->getManager();
         $curso = $entityManager->getRepository(Cursos::class)->findOneBy(['id'=>$data->cursoId]);
         $alumno = $entityManager->getRepository(Alumnos::class)->findOneBy(['id'=>$data->alumnoId]);
 
-        $matricula = new Matriculas(\DateTime::createFromFormat('Y-m-d', $data->fecha), $curso, $alumno);
+        $matricula = new Matriculas(\DateTime::createFromFormat('Y-m-d', $date), $curso, $alumno);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($matricula);
         $entityManager->flush();
