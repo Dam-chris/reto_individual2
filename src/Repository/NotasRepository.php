@@ -20,7 +20,7 @@ class NotasRepository extends ServiceEntityRepository
     }
     public function findNotasByAlumno($alumnoId)
     {
-        $sql = "SELECT asigna.nombre, notas.nota FROM App\Entity\Notas notas
+        $sql = "SELECT notas.id, asigna.nombre, notas.nota FROM App\Entity\Notas notas
                 JOIN notas.matricula mat
                 JOIN notas.asignatura asigna
                 JOIN mat.alumno alu
