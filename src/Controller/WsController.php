@@ -23,6 +23,7 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Config\Framework\ValidationConfig;
 
 class WsController extends AbstractController
 {
@@ -139,6 +140,7 @@ class WsController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($matricula);
         $entityManager->flush();
+
         return new JsonResponse(['status' =>'Matricula creada'], Response::HTTP_CREATED);
     }
     /**
@@ -181,10 +183,42 @@ class WsController extends AbstractController
         $alumno = $entityManager->getRepository(Alumnos::class)->findOneBy(['id'=> $alumnoId]);;
 
         $json = $this->convertToJson($alumno);
+
         return $json;
     }
 
+    /**
+     * @Route ("/ws/cursos/get/{alumnoId}", name="ws_getcursos_by_id", methods={"GET"})
+     */
+    public function getCursosByAlumno($alumnoId):JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
 
+        $curso = $entityManager->getRepository(Cursos::class)->findCursoByAlumnoId(['id'=> $alumnoId]);
+
+
+        $json = $this->convertToJson($curso);
+
+        return $json;
+
+    }
+    /**
+     * @Route("/ws/matricula/delete/{alumnoId}", name="ws_delete_matricula", methods={"DELETE"})
+     */
+    public function borrarMatricula($alumnoId):JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $alumno = $entityManager->getRepository(Alumnos::class)->findBy(['id'=> $alumnoId]);
+
+        $matricula = $entityManager->getRepository(Matriculas::class)->findOneBy(['alumno'=>$alumno]);
+        $entityManager->remove($matricula);
+        $entityManager->flush();
+        ////////////////////////////////////////////
+        $entityManager = $this->getDoctrine()->getManager();
+        $Matriculas = $entityManager->getRepository(Matriculas::class)->findAll();
+        $json = $this->convertToJson($Matriculas);
+        return $json;
+    }
 
 
 

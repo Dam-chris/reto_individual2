@@ -33,7 +33,7 @@ class Matriculas
      *
      * @ORM\ManyToOne(targetEntity="Cursos")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="curso_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="curso_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     private $curso;

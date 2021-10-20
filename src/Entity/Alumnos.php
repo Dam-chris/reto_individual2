@@ -75,7 +75,7 @@ class Alumnos
      *
      * @ORM\ManyToOne(targetEntity="Roles")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="rol_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="rol_id", referencedColumnName="id")
      * })
      */
     private $rol;
@@ -90,7 +90,7 @@ class Alumnos
      * @param string|null $fotoperfil
      * @param \Roles $rol
      */
-    public function __construct(string $nombre, string $apellido1, ?string $apellido2, \DateTime $fechanac, string $email, string $password, ?string $fotoperfil, Roles $rol)
+    public function __construct(string $nombre, string $apellido1, string $apellido2, \DateTime $fechanac, string $email, string $password, string $fotoperfil, Roles $rol)
     {
         $this->nombre = $nombre;
         $this->apellido1 = $apellido1;
