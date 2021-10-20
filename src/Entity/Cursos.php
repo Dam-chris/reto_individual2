@@ -28,6 +28,15 @@ class Cursos
      */
     private $nombre;
 
+    /**
+     * @param string $nombre
+     */
+    public function __construct(string $nombre)
+    {
+        $this->nombre = $nombre;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

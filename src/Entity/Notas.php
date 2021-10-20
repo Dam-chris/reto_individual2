@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Notas
  *
  * @ORM\Table(name="notas", indexes={@ORM\Index(name="asignatura_id", columns={"asignatura_id"}), @ORM\Index(name="matricula_id", columns={"matricula_id"})})
- * @ORM\Entity (repositoryClass="App\Repository\NotasRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\NotasRepository")
  */
 class Notas
 {
@@ -29,7 +29,7 @@ class Notas
     private $nota;
 
     /**
-     * @var Matriculas
+     * @var \Matriculas
      *
      * @ORM\ManyToOne(targetEntity="Matriculas")
      * @ORM\JoinColumns({
@@ -39,7 +39,7 @@ class Notas
     private $matricula;
 
     /**
-     * @var Asignaturas
+     * @var \Asignaturas
      *
      * @ORM\ManyToOne(targetEntity="Asignaturas")
      * @ORM\JoinColumns({
@@ -50,8 +50,8 @@ class Notas
 
     /**
      * @param string|null $nota
-     * @param Matriculas $matricula
-     * @param Asignaturas $asignatura
+     * @param \Matriculas $matricula
+     * @param \Asignaturas $asignatura
      */
     public function __construct(?string $nota, Matriculas $matricula, Asignaturas $asignatura)
     {
@@ -60,7 +60,7 @@ class Notas
         $this->asignatura = $asignatura;
     }
 
-//getters y setters
+
     public function getId(): ?int
     {
         return $this->id;

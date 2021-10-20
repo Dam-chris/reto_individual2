@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Alumnos
  *
  * @ORM\Table(name="alumnos", indexes={@ORM\Index(name="rol_id", columns={"rol_id"})})
- * @ORM\Entity (repositoryClass="App\Repository\AlumnadoRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\AlumnadoRepository")
  */
 class Alumnos
 {
@@ -64,6 +64,13 @@ class Alumnos
     private $password;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="fotoPerfil", type="string", length=65535, nullable=true)
+     */
+    private $fotoperfil;
+
+    /**
      * @var \Roles
      *
      * @ORM\ManyToOne(targetEntity="Roles")
@@ -80,9 +87,10 @@ class Alumnos
      * @param \DateTime $fechanac
      * @param string $email
      * @param string $password
+     * @param string|null $fotoperfil
      * @param \Roles $rol
      */
-    public function __construct(string $nombre, string $apellido1, ?string $apellido2, \DateTime $fechanac, string $email, string $password, Roles $rol)
+    public function __construct(string $nombre, string $apellido1, ?string $apellido2, \DateTime $fechanac, string $email, string $password, ?string $fotoperfil, Roles $rol)
     {
         $this->nombre = $nombre;
         $this->apellido1 = $apellido1;
@@ -90,6 +98,7 @@ class Alumnos
         $this->fechanac = $fechanac;
         $this->email = $email;
         $this->password = $password;
+        $this->fotoperfil = $fotoperfil;
         $this->rol = $rol;
     }
 
@@ -167,6 +176,18 @@ class Alumnos
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getFotoperfil()
+    {
+        return $this->fotoperfil;
+    }
+
+    public function setFotoperfil($fotoperfil): self
+    {
+        $this->fotoperfil = $fotoperfil;
 
         return $this;
     }

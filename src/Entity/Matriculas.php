@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * Matriculas
@@ -30,7 +29,7 @@ class Matriculas
     private $fecha;
 
     /**
-     * @var Cursos
+     * @var \Cursos
      *
      * @ORM\ManyToOne(targetEntity="Cursos")
      * @ORM\JoinColumns({
@@ -40,7 +39,7 @@ class Matriculas
     private $curso;
 
     /**
-     * @var Alumnos
+     * @var \Alumnos
      *
      * @ORM\ManyToOne(targetEntity="Alumnos")
      * @ORM\JoinColumns({
@@ -51,8 +50,8 @@ class Matriculas
 
     /**
      * @param \DateTime $fecha
-     * @param Cursos $curso
-     * @param Alumnos $alumno
+     * @param \Cursos $curso
+     * @param \Alumnos $alumno
      */
     public function __construct(\DateTime $fecha, Cursos $curso, Alumnos $alumno)
     {

@@ -29,7 +29,7 @@ class Asignaturas
     private $nombre;
 
     /**
-     * @var Cursos
+     * @var \Cursos
      *
      * @ORM\ManyToOne(targetEntity="Cursos")
      * @ORM\JoinColumns({
@@ -38,12 +38,9 @@ class Asignaturas
      */
     private $curso;
 
-
-
-
     /**
      * @param string $nombre
-     * @param Cursos $curso
+     * @param \Cursos $curso
      */
     public function __construct(string $nombre, Cursos $curso)
     {
@@ -51,7 +48,6 @@ class Asignaturas
         $this->curso = $curso;
     }
 
-    //getters y setters
 
     public function getId(): ?int
     {

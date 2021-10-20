@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Alumnado;
 use App\Entity\Alumnos;
 use App\Entity\Asignatura;
 use App\Entity\Asignaturas;
@@ -11,7 +12,6 @@ use App\Entity\Cursos;;
 use App\Entity\Matriculas;
 use App\Entity\Notas;
 use App\Entity\Roles;
-use FOS\RestBundle\Controller\Annotations\Get;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -111,7 +111,7 @@ class WsController extends AbstractController
 
         $alumno = new Alumnos($data->nombre, $data->apellido1, $data->apellido2,
             \DateTime::createFromFormat('Y-m-d', $data->fechaNac),
-            $data->email, $data->password, $rol);
+            $data->email, $data->password, $data->fotoperfil, $rol);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($alumno);
@@ -151,6 +151,80 @@ class WsController extends AbstractController
         $json = $this->convertToJson($notas);
         return $json;
     }
+
+    /**
+     * @Route("/ws/imagenes", name="ws_put_image", methods={"PUT"})
+     */
+    public function putImage(Request $request):JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $alumno = $entityManager->getRepository(Alumnos::class)->findOneBy(['id'=> $data['alumnoId']]);
+
+        empty($data['fotoperfil']) ? true:$alumno->setFotoperfil($data['fotoperfil']);
+
+        $entityManager->persist($alumno);
+        $entityManager->flush();
+
+        $json = $this->convertToJson($alumno);
+        return $json;
+    }
+    /**
+     * @Route("/ws/imagenes/get/{alumnoId}", name="ws_get_image", methods={"GET"})
+     */
+    public function getImage($alumnoId):JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $alumno = $entityManager->getRepository(Alumnos::class)->findOneBy(['id'=> $alumnoId]);;
+
+        $json = $this->convertToJson($alumno);
+        return $json;
+    }
+
+
+
+
+
+    /*update
+     *
+     * public function updateAlumno(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $alu = $entityManager->getRepository(Alumnado::class)->findOneBy(['id'=> $data["id"]]);
+
+        empty($data["dni"]) ? true:$alu->setDni($data["dni"]);
+        empty($data["nombre"]) ? true:$alu->setNombre($data["nombre"]);
+        empty($data["apellido1"]) ? true:$alu->setApellido1($data["apellido1"]);
+        empty($data["apellido2"]) ? true:$alu->setApellido2($data["apellido2"]);
+        empty($data["fecha"]) ? true:$alu->setFecha(\DateTime::createFromFormat('Y-m-d', $data["fecha"]));
+        empty($data["provincia"]) ? true:$alu->setProvincia($data["provincia"]);
+
+        $entityManager->persist($alu);
+        $entityManager->flush();
+        return new JsonResponse(['status'=>'Alumno modificado'], Response::HTTP_CREATED);
+    }
+
+     */
+    /*delete
+     *     public function deleteAlumno($id):JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $alu = $entityManager->getRepository(Alumnado::class)->findOneBy(['id'=>$id]);
+        $entityManager->remove($alu);
+        $entityManager->flush();
+        ////////////////////////////////////////////
+        $entityManager = $this->getDoctrine()->getManager();
+        $alumnado = $entityManager->getRepository(Alumnado::class)->findAll();
+        $json = $this->convertToJson($alumnado);
+        return $json;
+    }
+     */
+
     //conversor a Json
     private function convertToJson($object):JsonResponse
     {
